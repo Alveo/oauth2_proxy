@@ -2,6 +2,7 @@ package providers
 
 import (
 	"github.com/bitly/oauth2_proxy/cookie"
+	"log"
 )
 
 type Provider interface {
@@ -18,6 +19,8 @@ type Provider interface {
 }
 
 func New(provider string, p *ProviderData) Provider {
+	log.Printf("provider[%s]", provider)
+
 	switch provider {
 	case "linkedin":
 		return NewLinkedInProvider(p)

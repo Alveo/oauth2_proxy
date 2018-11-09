@@ -9,7 +9,7 @@ type DoorkeeperProvider struct {
 }
 
 func NewDoorkeeperProvider(p *ProviderData) *DoorkeeperProvider {
-	p.ProviderName = "Doorkeeper"
+	p.ProviderName = "Alveo(doorkeeper)"
 
 	// according to doorkeeper wiki: https://github.com/doorkeeper-gem/doorkeeper-provider-app
 	// there is an example OAuth2 provider application using the Doorkeeper gem here:
