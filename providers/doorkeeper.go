@@ -11,25 +11,19 @@ type DoorkeeperProvider struct {
 func NewDoorkeeperProvider(p *ProviderData) *DoorkeeperProvider {
 	p.ProviderName = "Alveo"
 
-	// according to doorkeeper wiki: https://github.com/doorkeeper-gem/doorkeeper-provider-app
-	// there is an example OAuth2 provider application using the Doorkeeper gem here:
-	// http://doorkeeper-provider.herokuapp.com/
-	// so the default Doorkeeper login url would set to live demo:
-	// https://doorkeeper-provider.herokuapp.com/oauth/authorize
-	//
-	demoHost := "staging.alveo.edu.au"
+	DoorkeeperHost := p.OAuthProviderHost
 
 	if p.LoginURL == nil || p.LoginURL.String() == "" {
 		p.LoginURL = &url.URL{
 			Scheme: "https",
-			Host:   demoHost,
+			Host:   DoorkeeperHost,
 			Path:   "/oauth/authorize",
 		}
 	}
 	if p.RedeemURL == nil || p.RedeemURL.String() == "" {
 		p.RedeemURL = &url.URL{
 			Scheme: "https",
-			Host:   demoHost,
+			Host:   DoorkeeperHost,
 			Path:   "/oauth/token",
 		}
 	}
@@ -37,7 +31,7 @@ func NewDoorkeeperProvider(p *ProviderData) *DoorkeeperProvider {
 	if p.ValidateURL == nil || p.ValidateURL.String() == "" {
 		p.ValidateURL = &url.URL{
 			Scheme: "https",
-			Host:   demoHost,
+			Host:   DoorkeeperHost,
 			Path:   "/oauth/authorize",
 		}
 	}
