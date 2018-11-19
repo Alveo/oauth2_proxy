@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -68,7 +69,6 @@ type Options struct {
 	OIDCIssuerURL     string `flag:"oidc-issuer-url" cfg:"oidc_issuer_url"`
 	LoginURL          string `flag:"login-url" cfg:"login_url"`
 	RedeemURL         string `flag:"redeem-url" cfg:"redeem_url"`
-	OAuthProviderHost string `flag:"oauth-provider-host" cfg:"oauth-provider-host"`
 	ProfileURL        string `flag:"profile-url" cfg:"profile_url"`
 	ProtectedResource string `flag:"resource" cfg:"resource"`
 	ValidateURL       string `flag:"validate-url" cfg:"validate_url"`
@@ -188,6 +188,7 @@ func (o *Options) Validate() error {
 		}
 		o.CompiledRegex = append(o.CompiledRegex, CompiledRegex)
 	}
+
 	msgs = parseProviderInfo(o, msgs)
 
 	if o.PassAccessToken || (o.CookieRefresh != time.Duration(0)) {
@@ -257,6 +258,8 @@ func parseProviderInfo(o *Options, msgs []string) []string {
 	p.ProfileURL, msgs = parseURL(o.ProfileURL, "profile", msgs)
 	p.ValidateURL, msgs = parseURL(o.ValidateURL, "validate", msgs)
 	p.ProtectedResource, msgs = parseURL(o.ProtectedResource, "resource", msgs)
+
+	log.Printf("parseProviderInfo: o.LoginURL[%s], p.LoginURL[%s]", o.LoginURL, p.LoginURL)
 
 	o.provider = providers.New(o.Provider, p)
 	switch p := o.provider.(type) {

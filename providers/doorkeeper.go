@@ -1,6 +1,7 @@
 package providers
 
 import (
+	"log"
 	"net/url"
 )
 
@@ -11,19 +12,19 @@ type DoorkeeperProvider struct {
 func NewDoorkeeperProvider(p *ProviderData) *DoorkeeperProvider {
 	p.ProviderName = "Alveo"
 
-	DoorkeeperHost := p.OAuthProviderHost
+	DefaultAlveoProviderHost := "staging.alveo.edu.au"
 
 	if p.LoginURL == nil || p.LoginURL.String() == "" {
 		p.LoginURL = &url.URL{
 			Scheme: "https",
-			Host:   DoorkeeperHost,
+			Host:   DefaultAlveoProviderHost,
 			Path:   "/oauth/authorize",
 		}
 	}
 	if p.RedeemURL == nil || p.RedeemURL.String() == "" {
 		p.RedeemURL = &url.URL{
 			Scheme: "https",
-			Host:   DoorkeeperHost,
+			Host:   DefaultAlveoProviderHost,
 			Path:   "/oauth/token",
 		}
 	}
@@ -31,10 +32,13 @@ func NewDoorkeeperProvider(p *ProviderData) *DoorkeeperProvider {
 	if p.ValidateURL == nil || p.ValidateURL.String() == "" {
 		p.ValidateURL = &url.URL{
 			Scheme: "https",
-			Host:   DoorkeeperHost,
+			Host:   DefaultAlveoProviderHost,
 			Path:   "/oauth/authorize",
 		}
 	}
+
+	log.Printf("loginURL=%s, redeemURL=%s, validateURL=%s\n", p.LoginURL, p.RedeemURL, p.ValidateURL)
+
 	//if p.Scope == "" {
 	//	p.Scope = "user:email"
 	//}
